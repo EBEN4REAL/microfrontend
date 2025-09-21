@@ -1,0 +1,28 @@
+name: Deploy Container
+
+on: # trigger events
+  push: # trigger on push events
+    branches: # only trigger on pushes to the main branch
+      - main
+    paths: # only trigger on changes in the container package directory
+      - 'packages/container/**'
+
+default: # default settings that will be inherited by all jobs
+  run: # default run settings
+    working-directory: 'packages/container' # run all commands in the container package directory
+
+jobs: # define jobs to be run
+  build:
+    runs-on: ubuntu-latest # use the latest Ubuntu runner
+
+    steps: # define steps to be run in the job
+      - uses: actions/checkout@v2 # use the checkout action
+      - run: npm install # install dependencies
+      - run: npm run build # build the container package
+
+      - uses: shinyinc/action-aws-cli@v1.2
+      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+        env: # set environment variables for the AWS CLI command
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # use the AWS access key ID from secrets
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # use the AWS secret access key from secrets
+          AWS_DEFAULT_REGION: 'us-east-1' # set the default AWS region
