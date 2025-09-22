@@ -7,7 +7,7 @@ on: # trigger events
     paths: # only trigger on changes in the container package directory
       - 'packages/container/**'
 
-defaults: # ✅ must be 'defaults', not 'default'
+defaults: # default settings for all jobs and steps
   run:
     working-directory: packages/container # run all commands in the container package directory
 
