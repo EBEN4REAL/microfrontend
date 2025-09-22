@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export default ({ onSignIn }) => { 
   const ref = useRef(null);
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const onParentNavigateRef = useRef(null);
 
   // Mount the microfrontend once 
