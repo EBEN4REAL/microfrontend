@@ -133,7 +133,7 @@
           </div>
         </div>
       </Panel>
-    </div>
+    </div> 
 
     <!-- <div class="p-col-12 p-lg-4 contacts">
       <Panel header="Contacts">
