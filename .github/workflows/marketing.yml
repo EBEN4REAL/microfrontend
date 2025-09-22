@@ -1,4 +1,4 @@
-name: Deploy Container
+name: Deploy Marketing App
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build container package
+      - name: Build marketing package
         run: npm run build
 
       - name: Configure AWS CLI
