@@ -6,7 +6,7 @@ export default ({ onSignIn }) => {
   const ref = useRef(null);
   const location = useLocation();
   const navigate = useNavigate(); 
-  const onParentNavigateRef = useRef(null); 
+  const onParentNavigateRef = useRef(null);
 
   // Mount the microfrontend once 
   useEffect(() => {

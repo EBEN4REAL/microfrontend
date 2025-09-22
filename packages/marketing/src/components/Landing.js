@@ -11,7 +11,6 @@ import MaterialLink from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-
 function Copyright() { 
   return (
     <Typography variant="body2" color="textSecondary" align="center">

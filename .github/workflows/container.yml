@@ -20,11 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        env:
-          PRODUCTION_DOMAIN: ${{ vars.PRODUCTION_DOMAIN }}
+        
 
       - name: Build container package
         run: npm run build
+        env:
+          PRODUCTION_DOMAIN: ${{ vars.PRODUCTION_DOMAIN }}
 
       - name: Configure AWS CLI
         uses: shinyinc/action-aws-cli@v1.2
