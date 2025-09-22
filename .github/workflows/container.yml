@@ -1,22 +1,22 @@
 name: Deploy Container
 
-on: # trigger events
-  push: # trigger on push events
-    branches: # only trigger on pushes to the main branch
+on:
+  push:
+    branches:
       - main
-    paths: # only trigger on changes in the container package directory
+    paths:
       - 'packages/container/**'
 
-defaults: # default settings for all jobs and steps
+defaults:
   run:
-    working-directory: packages/container # run all commands in the container package directory
+    working-directory: packages/container
 
-jobs: # define jobs to be run
+jobs:
   build:
-    runs-on: ubuntu-latest # use the latest Ubuntu runner
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 # clone repo
+      - uses: actions/checkout@v2
 
       - name: Install dependencies
         run: npm install
@@ -28,7 +28,14 @@ jobs: # define jobs to be run
         uses: shinyinc/action-aws-cli@v1.2
 
       - name: Sync to S3
-        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest --delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
