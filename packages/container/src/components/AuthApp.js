@@ -8,6 +8,7 @@ export default ({ onSignIn }) => {
   const navigate = useNavigate(); 
   const onParentNavigateRef = useRef(null);
 
+  
   // Mount the microfrontend once 
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current, {
